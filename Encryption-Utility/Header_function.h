@@ -1,11 +1,18 @@
+#include <iostream>
+#include <vector>
 
+using namespace std;
 
-void check_file_name_and_key(string& file_name, string& key);
+void check_file_name_and_key(char** argv, char** argvv);
 
-int verification_encryption_or_decryption(string file_name);
+int verification_encryption_or_decryption(char** argv);
 
-void encryption(string file_name);
+int count_char_text(char** argv);
 
-void decryption(string file_name);
+void reading_file(vector <unsigned __int8>&inputf, char** argv);
 
-int output_result(string file_name);
+void encryption(char** argv);
+
+void decryption(char** argv);
+
+int output_result(char** argv);
