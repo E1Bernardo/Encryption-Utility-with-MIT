@@ -12,16 +12,16 @@ int main(int argc, char* argv[]) // можно ли перед вводом да
     
    std::cout << "There are " << argc << " arguments:\n";
 
-   // ниже просто проверка
-   // Перебираем каждый аргумент и выводим его порядковый номер и значение
+   /* ниже просто проверка
+    Перебираем каждый аргумент и выводим его порядковый номер и значение
    for (int count = 0; count < argc; ++count)
-       std::cout << count << " " << argv[count] << '\n';
+       std::cout << count << " " << argv[count] << '\n';*/
 
 
     check_file_name_and_key(argc, argv);
     verification_encryption_or_decryption(argv);
 
-    vector <unsigned __int64>inputf(count_char_text(argv));
+    vector <unsigned __int8>inputf(count_char_text(argv));
 
     reading_file(inputf, argv);
 

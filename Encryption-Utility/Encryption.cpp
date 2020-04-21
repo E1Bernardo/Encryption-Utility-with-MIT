@@ -3,30 +3,76 @@
 #include<fstream>
 
 using namespace std;
+// проверку на простоту и прочие большие куски можно сделать в отдельные функции 
 
-void encryption(vector <unsigned __int64>& inputf)
+
+void encryption(vector <unsigned __int8>& inputf)
 {
-	unsigned __int8 IP[64]  // Матрица начальной перестановки IP
+	unsigned __int64 p, q;
+	bool check_p_2 = false , check_q_2 = false;
+	do // Проверка на натуральность первого числа  Checking for the naturalness of the first number
 	{
-		58,  50,  42,  34,  26,  18,  10,  2,  60,  52,  44,  36,  28,  20,  12,  4,
-		62,  54,  46,  38,  30,  22,  14,  6,  64,  56,  48,  40,  32,  24,  16,  8,
-		57,  49,  41,  33,  25,  17,  9,  1,  59,  51,  43,  35,  27,  19,  11,  3,
-		61,  53,  45,  37,  29,  21,  13,  5,  63,  55,  47,  39,  31,  23,  15,  7,
-	};
+		int check_p = 0;
+		cout << "Enter first prime number\n";
+		cout << "p = ";
+		cin >> p;
+		for (unsigned __int64 i = 2; i <= sqrt(p); i++)
+			if (p % i == 0) check_p++;
 
-	unsigned __int64 block64=0, new_block64=0;
-
-	for (size_t i = 0; i < size(inputf); i++)
-	{
-		block64 = inputf[i];
-		cout << block64<<endl;
-		for (size_t j = 0; j < 64; j++)
+		if (check_p == 0) check_p_2 = true;
+		else 
 		{
-			new_block64 |= ((block64 >> (64 - IP[j])) & 0b01) << (63 - j);
+			std::cin.clear();
+			std::cin.ignore(3000, '\n');
+			cout << "\nEntered number is not prime, repeat the entry:\n";
 		}
-		inputf[i] = new_block64;
-		cout << new_block64 << endl;
-		cout << inputf[i] << endl;
+	} while (check_p_2 == false);
+	cout << endl;
+	do //Проверка на натуральность второго числа   Checking for the naturalness of the second number
+	{
+		int check_q = 0;
+		cout << "Enter second prime number\n";
+		cout << "q = ";
+		cin >> q;
+		for (unsigned __int64 i = 2; i <= sqrt(q); i++)
+			if (q % i == 0) check_q++;
+
+		if (check_q == 0) check_q_2 = true;
+		else
+		{
+			std::cin.clear();
+			std::cin.ignore(3000, '\n');
+			cout << "\nEntered number is not prime, repeat the entry:\n";
+		}
+	} while (check_q_2 == false);
+
+
+	unsigned __int64 module = p * q;  // Модуль   Module
+	unsigned __int64 f_Euler = (p - 1) * (q - 1);  // Функция Эйлера   Func Euler
+	unsigned __int64 open_exhibitor;  // Открытая экспонента   Open Exhibitor
+	vector <unsigned __int64>open_exhibitor_array(0);
+
+	for (unsigned __int64 i = 2; i < f_Euler; i++)
+	{
+		int check = 0;
+		for (unsigned __int64 j = 1; j <= sqrt(i); j++)
+			if (i % j == 0) check++;
+		
+			if (check == 1 && i % f_Euler !=0)
+			{
+				open_exhibitor_array.insert(open_exhibitor_array.end(),i);
+			}
 	}
 
+	for (size_t i = 0; i < size(open_exhibitor_array); i++)
+	{
+		cout << open_exhibitor_array[i] << endl;
+	}
+
+	// нужно сделать что бы из вектора выбиралась рандомная открытая экспонента 
+	// сгенерировать число до границы вектора и этим числом по индексу вектора взять элемент 
+	//можно сделать что бы выбирал из второй половины, что бы числа были по больше 
+
+
+	cout << "yeap";
 }

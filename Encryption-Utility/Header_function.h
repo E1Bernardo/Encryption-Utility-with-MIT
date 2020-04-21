@@ -9,9 +9,9 @@ int verification_encryption_or_decryption(char* argv[]);
 
 int count_char_text(char* argv[]);
 
-void reading_file(vector <unsigned __int64>&inputf, char* argv[]);
+void reading_file(vector <unsigned __int8>&inputf, char* argv[]);
 
-void encryption(vector <unsigned __int64>& inputf);
+void encryption(vector <unsigned __int8>& inputf);
 
 void decryption(char* argv[]);
 
