@@ -4,13 +4,68 @@
 
 using namespace std;
 
-void check_file_name_and_key(char** argv, char** argvv)
+void check_file_name_and_key(int argc, char* argv[])
 {
-    //проверка существовани€ файла и правильности ввода ключа
+	string file_name = argv[1];
+	string key = argv[2];
+	int count_key = argc;
+	
+	//проверка существовани€ файла и правильности ввода ключа
    // запрос на повторный вод в случае неправильных данных
-}
+	
+	if (count_key > 3)
+	{
+		while (count_key > 3)
+		{
+			std::cin.clear();
+			std::cin.ignore(3000, '\n');
+			cout << "\nExceeded the allowed number of keys,  you will have to repeat the input:\n";
+			//cout << "Enter two keys in the form <file name> <Key> ";
+			cout << "Enter the file name >>> ";
+			cin >> file_name;//проверку файла на существование можно  будет сделать когда пропишу свой .exe в системные переменные?
+			cout << "Enter the key >>> ";
+			cin >> key;
 
-int verification_encryption_or_decryption(char** argv)
+			/*
+			проверка имени файла
+			*/
+
+			int hint = 0;
+			while (key != "des" || key != "DES")
+			{
+				std::cin.clear();
+				std::cin.ignore(3000, '\n');
+				cout << "\nError, entering a nonexistent key: \n";
+				cout << "Enter the key >>> ";
+				cin >> key;
+				hint++;
+				if (hint > 3) cout << "\nThere is only one key in this program - [DES] or [des]\n";
+			}
+		}
+	}
+	else
+	{
+		/*
+			проверка имени файла
+		*/
+		int hint = 0;
+		while (key != "des" && key != "DES")//проверка ключа
+		{ // если € подставл€ю вместо key argv[] то while становитс€ бесконечным. ѕри key цикл работает нормально
+			cout << "\nError, entering a nonexistent key: \n";
+			cout << "Enter the key >>> ";
+			cin >> key;
+			std::cin.clear();
+			std::cin.ignore(3000, '\n');
+			hint++;
+			if (hint >= 3) cout << "\nThere is only one key in this program - [DES] or [des]\n";
+		}
+	}
+}
+  // в итоге у мен€ будет правильное им€ файла и ключ, но как передать это обратно в main?
+// или есть вариант перезаписать аргумент функции ?
+
+
+int verification_encryption_or_decryption(char* argv[])
 {
     //проверка зашифрован файл или нет 
     // вывод ошибки если прос€т зашифровать зашифрованный файл
@@ -21,7 +76,7 @@ int verification_encryption_or_decryption(char** argv)
 }
 
 
-int count_char_text(char** argv)// —читаем колличество символов дл€ задани€ вектору размера.
+int count_char_text(char* argv[])// —читаем колличество символов дл€ задани€ вектору размера.
 {
 	fstream in;
 	in.open(("Test.txt"), fstream::binary | ios::in); // ¬место Test.txt должен быть ключ с именем файла
@@ -45,7 +100,7 @@ int count_char_text(char** argv)// —читаем колличество символов дл€ задани€ вект
 	return count_char;
 }
 
-void reading_file(vector <unsigned __int8>&inputf, char** argv)// —читываем в вектор данные из файла мы же побитово считываем?
+void reading_file(vector <unsigned __int64>&inputf, char* argv[])// —читываем в вектор данные из файла мы же побитово считываем?
 {// сам фаил содержит обычный текст, но € поставил ключ binary он ведь должен побитово считать?
 	fstream in;
 	in.open(("Test.txt"), fstream::binary | ios::in );// ¬место Test.txt должен быть ключ с именем файла
@@ -59,24 +114,19 @@ void reading_file(vector <unsigned __int8>&inputf, char** argv)// —читываем в ве
 	{
 		for (size_t i = 0; i < 641; i++)
 		{
-			in.read((char*)&inputf[i], sizeof(unsigned __int8));
+			in.read((char*)&inputf[i], sizeof(unsigned __int64));
 		}
 	}
 	in.close();
 }
 
 
-void encryption(char** argv)
-{
-// шифрование данных
-}
-
-void decryption(char** argv)
+void decryption(char* argv[])
 {
     // расшифровка данных
 }
 
-int output_result(char** argv)
+int output_result(char* argv[])
 {
     // вывод результата успех или ошибка 
     // предусмотреть несколько кодов ошибок 

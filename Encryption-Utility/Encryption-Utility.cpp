@@ -3,17 +3,25 @@
 #include"Header_function.h"
 
 
-
 using namespace std;
 // Аргумены 1- имя файла  2- ключ шифрование
-int main(int argc, char** argv) // можно ли перед вводом данных написать в консоль, что имеено нужно ввести?   //string file_name, string key
+// Пусть ключем шифрования будет название типа шифрования DES or des
+int main(int argc, char* argv[]) // можно ли перед вводом данных написать в консоль, что имеено нужно ввести?   //string file_name, string key
 {// Арнументы какие-то корявые вышли 
    cout << "Hello World!\n";
     
-    check_file_name_and_key(argv, argv);
+   std::cout << "There are " << argc << " arguments:\n";
+
+   // ниже просто проверка
+   // Перебираем каждый аргумент и выводим его порядковый номер и значение
+   for (int count = 0; count < argc; ++count)
+       std::cout << count << " " << argv[count] << '\n';
+
+
+    check_file_name_and_key(argc, argv);
     verification_encryption_or_decryption(argv);
 
-    vector <unsigned __int8>inputf(count_char_text(argv));
+    vector <unsigned __int64>inputf(count_char_text(argv));
 
     reading_file(inputf, argv);
 
@@ -22,11 +30,11 @@ int main(int argc, char** argv) // можно ли перед вводом да�
        // cout << inputf[i] << endl;
     
 
-    if (argv[1] == "ключ для шифрования")
-    {
-        encryption(argv);
-    }
-    else
+    //if (argv[2] == "des" || argv[2] == "DES")
+    
+        encryption(inputf);
+    
+    //else
     {
         decryption(argv);
     }
