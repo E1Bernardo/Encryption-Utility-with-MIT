@@ -112,7 +112,7 @@ void reading_file(vector <unsigned __int8>&inputf, char* argv[])// —читываем в в
 	}
 	else
 	{
-		for (size_t i = 0; i < 641; i++)
+		for (size_t i = 0; i < size(inputf); i++)
 		{
 			in.read((char*)&inputf[i], sizeof(unsigned __int8));
 		}
