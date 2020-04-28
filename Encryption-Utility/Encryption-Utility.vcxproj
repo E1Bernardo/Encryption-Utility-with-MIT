@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Decryption.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Encryption.cpp" />
     <ClCompile Include="Function.cpp" />

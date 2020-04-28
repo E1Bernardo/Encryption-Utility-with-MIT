@@ -100,7 +100,7 @@ int count_char_text(char* argv[])// —читаем колличество символов дл€ задани€ век
 	return count_char;
 }
 
-void reading_file(vector <unsigned __int8>&inputf, char* argv[])// —читываем в вектор данные из файла мы же побитово считываем?
+void reading_file(vector <unsigned __int8>& simple_text, char* argv[])// —читываем в вектор данные из файла мы же побитово считываем?
 {// сам фаил содержит обычный текст, но € поставил ключ binary он ведь должен побитово считать?
 	fstream in;
 	in.open(("Test.txt"), fstream::binary | ios::in );// ¬место Test.txt должен быть ключ с именем файла
@@ -112,19 +112,14 @@ void reading_file(vector <unsigned __int8>&inputf, char* argv[])// —читываем в в
 	}
 	else
 	{
-		for (size_t i = 0; i < size(inputf); i++)
+		for (size_t i = 0; i < size(simple_text); i++)
 		{
-			in.read((char*)&inputf[i], sizeof(unsigned __int8));
+			in.read((char*)&simple_text[i], sizeof(unsigned __int8));
 		}
 	}
 	in.close();
 }
 
-
-void decryption(char* argv[])
-{
-    // расшифровка данных
-}
 
 int output_result(char* argv[])
 {

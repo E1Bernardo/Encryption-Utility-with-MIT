@@ -2,6 +2,11 @@
 #include <vector>
 #include"Header_function.h"
 
+struct Key
+{
+    unsigned __int64 exhibitor;
+    unsigned __int64 mod; // сокращение от модуль   the abbreviation for module
+};
 
 using namespace std;
 // Аргумены 1- имя файла  2- ключ шифрование
@@ -21,9 +26,9 @@ int main(int argc, char* argv[]) // можно ли перед вводом да
     check_file_name_and_key(argc, argv);
     verification_encryption_or_decryption(argv);
 
-    vector <unsigned __int8>inputf(count_char_text(argv));
+    vector <unsigned __int8>simple_text(count_char_text(argv));
 
-    reading_file(inputf, argv);
+    reading_file(simple_text, argv);
 
     // проверочный вывод на экран
     //for (size_t i = 0; i < size(inputf); i++)
@@ -32,12 +37,14 @@ int main(int argc, char* argv[]) // можно ли перед вводом да
 
     //if (argv[2] == "des" || argv[2] == "DES")
     
-        encryption(inputf);
+    
+    Key encryption(simple_text);
     
     //else
-    {
-        decryption(argv);
-    }
+    
+        vector <unsigned __int8>cipher_text_vector(count_char_text(argv));
+        decryption(cipher_text_vector);
+    
 
     output_result(argv);
 }
