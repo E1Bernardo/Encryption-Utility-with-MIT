@@ -2,71 +2,71 @@
 #include <vector>
 #include<fstream>
 
+struct Console_key
+{
+	string file_name;
+	string optional_key; // выбор типа шифрования 
+};
+
+
 using namespace std;
 
-void check_file_name_and_key(int argc, char* argv[])
+void check_console_input(int argc, char* argv[], Console_key &console_input)
 {
 	string file_name = argv[1];
 	string key = argv[2];
 	int count_key = argc;
-	
 	//проверка существования файла и правильности ввода ключа
    // запрос на повторный вод в случае неправильных данных
-	
-	if (count_key > 3)
-	{
-		while (count_key > 3)
-		{
+	if (count_key > 3){
+		while (count_key > 3){
 			std::cin.clear();
 			std::cin.ignore(3000, '\n');
 			cout << "\nExceeded the allowed number of keys,  you will have to repeat the input:\n";
-			//cout << "Enter two keys in the form <file name> <Key> ";
-			cout << "Enter the file name >>> ";
+			cout << "Enter the file name in the form <example.txt> >>> ";
 			cin >> file_name;//проверку файла на существование можно  будет сделать когда пропишу свой .exe в системные переменные?
 			cout << "Enter the key >>> ";
 			cin >> key;
-
 			/*
 			проверка имени файла
 			*/
-
 			int hint = 0;
-			while (key != "des" || key != "DES")
-			{
+			while (key != "rsa" || key != "RSA"){
 				std::cin.clear();
 				std::cin.ignore(3000, '\n');
 				cout << "\nError, entering a nonexistent key: \n";
 				cout << "Enter the key >>> ";
 				cin >> key;
 				hint++;
-				if (hint > 3) cout << "\nThere is only one key in this program - [DES] or [des]\n";
+				if (hint > 3) {
+					cout << "\nThere is only one key in this program - [RSA] or [rsa]\n";
+				}
 			}
 		}
-	}
-	else
+	}else
 	{
 		/*
 			проверка имени файла
 		*/
 		int hint = 0;
-		while (key != "des" && key != "DES")//проверка ключа
-		{ // если я подставляю вместо key argv[] то while становится бесконечным. При key цикл работает нормально
+		while (key != "rsa" || key != "RSA"){
+			std::cin.clear();
+			std::cin.ignore(3000, '\n');
 			cout << "\nError, entering a nonexistent key: \n";
 			cout << "Enter the key >>> ";
 			cin >> key;
-			std::cin.clear();
-			std::cin.ignore(3000, '\n');
 			hint++;
-			if (hint >= 3) cout << "\nThere is only one key in this program - [DES] or [des]\n";
+			if (hint > 3) {
+				cout << "\nThere is only one key in this program - [RSA] or [rsa]\n";
+			}
 		}
 	}
+	console_input = { file_name , key };
 }
-  // в итоге у меня будет правильное имя файла и ключ, но как передать это обратно в main?
-// или есть вариант перезаписать аргумент функции ?
 
-
-int verification_encryption_or_decryption(char* argv[])
+int verification_encryption_decryption(string file_name)
 {
+	file_name;
     //проверка зашифрован файл или нет 
     // вывод ошибки если просят зашифровать зашифрованный файл
     //вывод ошибки если просят расшифровать не зашифрованный файл
@@ -76,22 +76,18 @@ int verification_encryption_or_decryption(char* argv[])
 }
 
 
-int count_char_text(char* argv[])// Считаем колличество символов для задания вектору размера.
+int count_char_text(string file_name)// Считаем колличество символов для задания вектору размера.
 {
 	fstream in;
-	in.open(("Test.txt"), fstream::binary | ios::in); // Вместо Test.txt должен быть ключ с именем файла
+	in.open((file_name), fstream::binary | ios::in);
 	int count_char = 0;
-	if (!in.is_open())
-	{
-		cerr << "error";
+	if (!in.is_open()){
+		cerr << "Error, the file didn't open";
 		exit(1);
-	}
-	else
+	}else
 	{
-		
 		char ch;
-		while (!in.eof())
-		{
+		while (!in.eof()){
 			in.read((char*)&ch, sizeof(ch));
 			count_char++;
 		}
@@ -100,20 +96,17 @@ int count_char_text(char* argv[])// Считаем колличество символов для задания век
 	return count_char;
 }
 
-void reading_file(vector <unsigned __int8>& simple_text, char* argv[])// Считываем в вектор данные из файла мы же побитово считываем?
-{// сам фаил содержит обычный текст, но я поставил ключ binary он ведь должен побитово считать?
+void reading_file(vector <unsigned __int8>& simple_text, string file_name)
+{
 	fstream in;
-	in.open(("Test.txt"), fstream::binary | ios::in );// Вместо Test.txt должен быть ключ с именем файла
+	in.open((file_name), fstream::binary | ios::in );
 
-	if (!in.is_open())
-	{
-		cerr << "error";
+	if (!in.is_open()){
+		cerr << "Error, the file didn't open";
 		exit(1);
-	}
-	else
+	}else
 	{
-		for (size_t i = 0; i < size(simple_text); i++)
-		{
+		for (size_t i = 0; i < size(simple_text); i++){
 			in.read((char*)&simple_text[i], sizeof(unsigned __int8));
 		}
 	}

@@ -2,49 +2,34 @@
 #include <vector>
 #include"Header_function.h"
 
-struct Key
+struct Console_key
 {
-    unsigned __int64 exhibitor;
-    unsigned __int64 mod; // сокращение от модуль   the abbreviation for module
+    string file_name;
+    string optional_key; // выбор типа шифрования 
 };
 
 using namespace std;
-// Аргумены 1- имя файла  2- ключ шифрование
-// Пусть ключем шифрования будет название типа шифрования DES or des
+// Аргумены 1- имя файла  2- ключ шифрования
+
 int main(int argc, char* argv[]) // можно ли перед вводом данных написать в консоль, что имеено нужно ввести?   //string file_name, string key
-{// Арнументы какие-то корявые вышли 
+{
    cout << "Hello World!\n";
-    
-   std::cout << "There are " << argc << " arguments:\n";
+   Console_key console_input;
 
-   /* ниже просто проверка
-    Перебираем каждый аргумент и выводим его порядковый номер и значение
-   for (int count = 0; count < argc; ++count)
-       std::cout << count << " " << argv[count] << '\n';*/
+   check_console_input(argc, argv, console_input);
 
+   int сhecking_file_status = verification_encryption_decryption(console_input.file_name); // 1 - файл зашифрован  0 - файл простой
 
-    check_file_name_and_key(argc, argv);
-    verification_encryption_or_decryption(argv);
+    if (сhecking_file_status == 0){
+        vector <unsigned __int8>simple_text(count_char_text(console_input.file_name));
 
-    vector <unsigned __int8>simple_text(count_char_text(argv));
-
-    reading_file(simple_text, argv);
-
-    // проверочный вывод на экран
-    //for (size_t i = 0; i < size(inputf); i++)
-       // cout << inputf[i] << endl;
-    
-
-    //if (argv[2] == "des" || argv[2] == "DES")
-    
-    
-    Key encryption(simple_text);
-    
-    //else
-    
-        vector <unsigned __int8>cipher_text_vector(count_char_text(argv));
-        decryption(cipher_text_vector);
-    
+        reading_file(simple_text, console_input.file_name);
+        encryption_and_recording(simple_text, console_input.file_name);
+    }
+    else if (сhecking_file_status == 1){
+        vector <unsigned __int8>cipher_text_vector(count_char_text(console_input.file_name));
+        decryption_and_recording(cipher_text_vector, console_input.file_name);
+    }
 
     output_result(argv);
 }
