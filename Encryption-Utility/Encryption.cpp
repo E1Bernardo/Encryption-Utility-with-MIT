@@ -40,14 +40,22 @@ void encryption_and_recording(vector <unsigned __int8>& simple_text, string file
 		exit(1);
 	}else
 	{
+		char mark = '!';
+		mark = ((unsigned __int64)pow(mark, 5)) % 35;// числа для шифрования метки, применяются только в функции verification_encryption_decryption и в этой функции
+		encrypted_text.write((char*)&mark, sizeof(unsigned __int8));
+		
+
 		for (size_t i = 0; i < size(simple_text); i++){
-			unsigned __int8 res;
+			unsigned __int64  res;
 			res = simple_text[i];
-			res = ((unsigned __int64)pow(simple_text[i], public_key.exhibitor)) % public_key.mod;
+			res = pow(res, 5);
+			res = res % 21;
 			encrypted_text.write((char*)&res, sizeof(unsigned __int8));
+			int a = 1;
 		}
 	}
 	encrypted_text.close();
+	cout << "Your key for decryption text" << " || " << p <<" || " << q << " || " << public_key.exhibitor << " || " << endl;
 }
 
 int checking_number_simplicity()
@@ -57,9 +65,17 @@ int checking_number_simplicity()
 	do // Проверка на натуральность первого числа  Checking for the naturalness of the first number
 	{
 		int check_number = 0;
-		cout << "Enter prime number\n";
-		cout << "number = ";
+		cout << "\nEnter prime number:  ";
 		cin >> number;
+
+		while (number < 10){
+			std::cin.clear();
+			std::cin.ignore(3000, '\n');
+			cout << "\nThe number must be greater than 10\n";
+			cout << "Enter prime number:";
+			cin >> number;
+		}
+
 		for (unsigned __int64 i = 2; i <= sqrt(number); i++) {
 			if (number % i == 0) check_number++;
 		}
@@ -100,13 +116,13 @@ Encryption_key do_public_key(std::vector <unsigned __int64> & public_exhibitor_a
 Encryption_key do_private_key(std::vector <unsigned __int64>& private_exhibitor_array, unsigned __int64 p, unsigned __int64 q, unsigned __int64 f_Euler, Encryption_key public_key)
 {
 	
-	for (unsigned __int64 i = 0; i < p*q; i++) {
+	for (unsigned __int64 i = 0; i < (p*q); i++) {
 		if ((i* public_key.exhibitor)% f_Euler == 1) {
 			private_exhibitor_array.insert(private_exhibitor_array.end(), i);
 		}
 	}
 	srand(time(NULL));
-	int choice = rand() % std::size(private_exhibitor_array);
+	int choice = rand() % private_exhibitor_array.size();
 	Encryption_key close_key{ private_exhibitor_array[choice], public_key.mod };
 
 	return close_key;

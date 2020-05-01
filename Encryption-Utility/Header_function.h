@@ -1,7 +1,13 @@
-//#include <iostream>
-//#include <vector>
+#include <iostream>
+#include <vector>
 
 using namespace std;
+
+struct Console_key
+{
+    string file_name;
+    string optional_key; // выбор типа шифрования 
+};
 
 void check_console_input(int argc, char* argv[], Console_key &console_input);
 

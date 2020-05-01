@@ -2,11 +2,6 @@
 #include <vector>
 #include"Header_function.h"
 
-struct Console_key
-{
-    string file_name;
-    string optional_key; // выбор типа шифрования 
-};
 
 using namespace std;
 // Аргумены 1- имя файла  2- ключ шифрования
